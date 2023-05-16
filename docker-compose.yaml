@@ -1,0 +1,40 @@
+version: '3.8'
+services:
+  master01:
+    container_name: mysql-master01
+    image: mysql:8.0
+    restart: unless-stopped
+    ports:
+      - 3306
+    volumes:
+      - ./master-01/conf.d/mysql.conf.cnf:/etc/mysql/conf.d/mysql.conf.cnf
+      - ./master-01/data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${ROOT_PASSWORD}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${USER_PASSWORD}
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: ${DATABASE}
+      MYSQL_LOWER_CASE_TABLE_NAMES: 0
+      TZ: ${TIME_ZONE}
+    env_file:
+      - ./.env
+  master02:
+    container_name: mysql-master02
+    image: mysql:8.0
+    restart: unless-stopped
+    ports:
+      - 3306
+    volumes:
+      - ./master-02/conf.d/mysql.conf.cnf:/etc/mysql/conf.d/mysql.conf.cnf
+      - ./master-02/data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${ROOT_PASSWORD}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${USER_PASSWORD}
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: ${DATABASE}
+      MYSQL_LOWER_CASE_TABLE_NAMES: 0
+      TZ: ${TIME_ZONE}
+    env_file:
+      - ./.env
